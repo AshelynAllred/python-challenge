@@ -2,7 +2,7 @@
 ## "Average Change" confusion
 It was not clearly specified in the assignment what "Average Change" was supposed to be. It took some figuring out that it was supposed to be the *overall* rate of change across the whole range. I ended up on the "Rate of Change" formula
 
-### $\frac{f(t_{final}) - f(t_{init})}{t_{final} - t_{init}}$
+### $`\frac{f(t_{final}) - f(t_{init})}{t_{final} - t_{init}}`$
 
 which ended up returning the correct output value. ($f(t)$ being P/L, and $t$ being months) I'd grade the instructions on the first portion about 89% as a result of this confusion.
 
