@@ -13,18 +13,25 @@ pl_current = 0
 pl_first = 0
 
 # splitting out the for loop contents into a method
-# makes grabbing the first value only much easier
-# since accessing csv_read is a destructive process
+# makes grabbing only the first value much easier
+# since calling next(csv_read) is a destructive process
 def check_row(row):
+    # setting these to global because it makes the code easier to digest
     global row_ct, total, pl_max, pl_min, pl_change, pl_last, pl_current, pl_first
+    # number of rows, being used to count months
     row_ct += 1
+    # get current value
     pl_current = int(row[1])
+    # calculate change as current value minus last
     pl_change = pl_current - pl_last
+    # adding to total
     total += pl_current
+    # check profit/loss change value with existing max and min variables
     if (pl_change > pl_max[1]):
         pl_max = [row[0], pl_change]
     if (pl_change < pl_min[1]):
         pl_min = [row[0], pl_change]
+    # set up the next iteration by assigning previous row's P/L value to the current row's P/L after all the math is done
     pl_last = pl_current
     return
 
@@ -37,6 +44,7 @@ def write_and_print(output_str, file):
 with open(csv_path) as csv_file:
 
     csv_read = csv.reader(csv_file)
+    # remove header from csv (file has already been checked to confirm header exists)
     csv_header = next(csv_read)
     
     #iterate first row to grab first value for average change calculation
@@ -47,7 +55,7 @@ with open(csv_path) as csv_file:
     for row in csv_read:
         check_row(row)
 
-#calculate average change (LaTeX $\frac{f(t_0) - f(t_f)}{t_f - t_0}$)
+#calculate average change (LaTeX $\frac{f(t_f) - f(t_0)}{t_f - t_0}$)
 pl_avg = (pl_current - pl_first) / (row_ct - 1)
 
 with open(analysis_path, "w") as a_file:
